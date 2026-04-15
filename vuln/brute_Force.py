@@ -1,7 +1,7 @@
 import requests
 import re
 
-BASE_URL = "http://192.168.11.128:8888"
+BASE_URL = ""
 
 def get_token(session, url):
     res = session.get(url)
